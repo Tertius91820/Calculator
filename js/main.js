@@ -39,19 +39,24 @@ if(this.displayText === "0"){
   switch (value){
   case '=' :
     //calculate the answer
+    this.calcAnswer(this.displayText)
     break;
-  case "C":
+  case "c":
     //clear screen and stored value
+    this.clearAll()
     break;
   case '.':
     if(this.displayText == 0){
       //pass "0." into add text method
+      this.addText("0.")
     }else{
-      //add value to tect string
+      //add value to text string
+      this.addText(value)
     }
     break;
     default:
       //add value to text string
+      this.addText(value)
       break;
   }
   },
@@ -63,11 +68,31 @@ if(this.displayText === "0"){
       this.displayText = this.prevTotal
       this.prevTotal = null
     }
-    if(/*user has entered an invalid sequence dont pass*/){
 
+      /*check if user has entered an invalid sequence dont pass*/
+    if(isNaN(+(value)) && isNaN(+(this.displayText))){
+      if(isNaN(this.displayText.slice(-1))){
+        return;
+      }
     }
     this.displayText += value
     //ouput display text to screen
+    this.outputText(this.displayText)
 
   },
+
+  outputText(text){
+    document.querySelector(".calculator-screen").value = text
+  },
+
+  calcAnswer(equation) {
+      let result = Function ("return " + equation)()
+      this.outputText(result)
+  },
+
+  clearAll(){
+    this.displayText ="0",
+    this.prevTotal = null,
+    this.outputText(this.displayText)
+  }
 }
