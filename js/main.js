@@ -95,4 +95,7 @@ if(this.displayText === "0"){
     this.prevTotal = null,
     this.outputText(this.displayText)
   }
+  
 }
+
+// get the input working with "." working 
